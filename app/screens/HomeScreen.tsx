@@ -8,6 +8,8 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { SelectedContent } from '@/types/index';
+import { RootDrawerParamList } from '@/types/navigation';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 const MorningImage = require('@/assets/images/morning_bg.png');
 const EveningImage = require('@/assets/images/evening_bg.png');
@@ -17,7 +19,7 @@ export default function HomeScreen() {
     useState<SelectedContent | null>(null);
   const [isBeforeNoon, setIsBeforeNoon] = useState(true);
   const scrollY = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation();
+  const navigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
 
   function selectDevotional() {
     const currentDate = new Date();

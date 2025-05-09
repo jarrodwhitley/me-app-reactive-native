@@ -27,7 +27,7 @@ export default function DrawerNavigator() {
       }}
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Menu" component={MenuScreen} />
+      {/* <Drawer.Screen name="Menu" component={MenuScreen} /> */}
     </Drawer.Navigator>
   );
 }
