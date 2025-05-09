@@ -65,6 +65,15 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* Fixed Menu Button */}
+      <TouchableOpacity
+        style={styles.fixedMenuButton}
+        onPress={() => navigation.openDrawer()}
+      >
+        <IconSymbol size={28} name="line.horizontal.3" color={'#ffffff'} />
+      </TouchableOpacity>
+
+      {/* Scrollable Content */}
       <Animated.View
         style={[
           styles.stickyHeader,
@@ -74,22 +83,22 @@ export default function HomeScreen() {
           },
         ]}
       >
-        <TouchableOpacity
+        {/* Sticky Header Menu Button */}
+        {/* <TouchableOpacity
           style={styles.menuButton}
           onPress={() => navigation.openDrawer()}
         >
-          <IconSymbol
-            size={28}
-            name="square.and.arrow.up.fill"
-            color={'#ffffff'}
-          />
-        </TouchableOpacity>
+          <IconSymbol size={28} name="line.horizontal.3" color={'#ffffff'} />
+        </TouchableOpacity> */}
+
+        {/* Header Text */}
         {selectedDevotional && (
           <ThemedText type="title" style={styles.stickyHeaderText}>
             {selectedDevotional.title}
           </ThemedText>
         )}
       </Animated.View>
+
       <Animated.ScrollView
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -106,9 +115,6 @@ export default function HomeScreen() {
                   source={isBeforeNoon ? MorningImage : EveningImage}
                   style={styles.reactLogo}
                 />
-                {/* <ThemedText type="title" style={styles.devotionalTitle}>
-                {selectedDevotional ? selectedDevotional.title : ''}
-              </ThemedText> */}
                 <ThemedText
                   type="title"
                   style={[
@@ -147,22 +153,29 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 100, // Increase the height to provide more space
+    justifyContent: 'center', // Center the header text vertically
+    alignItems: 'center', // Center the header text horizontally
     zIndex: 10,
+    paddingTop: 20, // Add padding to push content down
   },
   menuButton: {
+    position: 'absolute', // Position the menu button independently
+    bottom: 515, // Adjust vertical position to align with the header text
+    left: 16, // Adjust horizontal position
+  },
+  fixedMenuButton: {
     position: 'absolute',
-    top: 10,
-    left: 10,
+    top: 57,
+    left: 16,
     zIndex: 20,
   },
   stickyHeaderText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 50,
+    textAlign: 'center',
+    marginTop: 20,
   },
   headerContainer: {
     flex: 1,
