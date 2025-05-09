@@ -1,12 +1,14 @@
 import { Image } from 'expo-image';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import contentData from '@/assets/data/content.json';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 import { SelectedContent } from '@/types/index';
+import { useNavigation } from '@react-navigation/native';
 const MorningImage = require('@/assets/images/morning_bg.png');
 const EveningImage = require('@/assets/images/evening_bg.png');
 
@@ -15,6 +17,7 @@ export default function HomeScreen() {
     useState<SelectedContent | null>(null);
   const [isBeforeNoon, setIsBeforeNoon] = useState(true);
   const scrollY = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
 
   function selectDevotional() {
     const currentDate = new Date();
@@ -69,6 +72,16 @@ export default function HomeScreen() {
           },
         ]}
       >
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => navigation.openDrawer()}
+        >
+          <IconSymbol
+            size={28}
+            name="square.and.arrow.up.fill"
+            color={'#ffffff'}
+          />
+        </TouchableOpacity>
         {selectedDevotional && (
           <ThemedText type="title" style={styles.stickyHeaderText}>
             {selectedDevotional.title}
@@ -136,6 +149,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 10,
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 20,
   },
   stickyHeaderText: {
     color: 'white',

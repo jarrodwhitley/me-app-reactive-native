@@ -23,4 +23,16 @@ export const Colors = {
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
+  morning: {
+    tabBarButton: '#68C6CB',
+    tabBarButtonSelected: '#DCF8FA',
+    primary: '#A1CEDC',
+    tabBarBackground: '#296C70',
+  },
+  evening: {
+    primary: '#1D3D47',
+    tabBarBackground: '#312251',
+    tabBarButton: '#423160',
+    tabBarButtonSelected: '#6C568E',
+  },
 };
