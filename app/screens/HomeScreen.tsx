@@ -7,12 +7,14 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Colors } from '@/constants/Colors';
 import { SelectedContent } from '@/types/index';
 import { RootDrawerParamList } from '@/types/navigation';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 const MorningImage = require('@/assets/images/morning_bg.png');
 const EveningImage = require('@/assets/images/evening_bg.png');
+const ReactLogo = require('@/assets/images/partial-react-logo.png');
 
 export default function HomeScreen() {
   const [selectedDevotional, setSelectedDevotional] =
@@ -25,7 +27,7 @@ export default function HomeScreen() {
     const currentDate = new Date();
     const currentHour = currentDate.getHours();
     const currentMinute = currentDate.getMinutes();
-    const month = currentDate.getMonth();
+    const month = currentDate.getMonth() + 1;
     const day = currentDate.getDate();
     setIsBeforeNoon(
       currentHour < 12 || (currentHour === 12 && currentMinute === 0),
@@ -79,18 +81,12 @@ export default function HomeScreen() {
           styles.stickyHeader,
           {
             opacity: headerOpacity,
-            backgroundColor: isBeforeNoon ? '#A1CEDC' : '#312251',
+            backgroundColor: isBeforeNoon
+              ? Colors.morning.headerBackground
+              : Colors.evening.headerBackground,
           },
         ]}
       >
-        {/* Sticky Header Menu Button */}
-        {/* <TouchableOpacity
-          style={styles.menuButton}
-          onPress={() => navigation.openDrawer()}
-        >
-          <IconSymbol size={28} name="line.horizontal.3" color={'#ffffff'} />
-        </TouchableOpacity> */}
-
         {/* Header Text */}
         {selectedDevotional && (
           <ThemedText type="title" style={styles.stickyHeaderText}>
@@ -108,7 +104,10 @@ export default function HomeScreen() {
       >
         {selectedDevotional && (
           <ParallaxScrollView
-            headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+            headerBackgroundColor={{
+              light: Colors.morning.headerBackground,
+              dark: Colors.evening.headerBackground,
+            }}
             headerImage={
               <ThemedView style={styles.headerContainer}>
                 <Image
@@ -130,7 +129,7 @@ export default function HomeScreen() {
               </ThemedView>
             }
           >
-            <ThemedView>
+            <ThemedView style={styles.contentContainer}>
               <ThemedText type="title" style={styles.devotionalTitle}>
                 {selectedDevotional.title}
               </ThemedText>
@@ -202,8 +201,12 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     lineHeight: 18,
   },
+  contentContainer: {
+    paddingTop: 0,
+  },
   devotionalTitle: {
     fontSize: 24,
+    fontWeight: 500,
     textAlign: 'center',
   },
   devoBody: {

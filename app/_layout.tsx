@@ -16,7 +16,7 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  const isBeforeNoon = new Date().getHours() < 12;
+//   const isBeforeNoon = new Date().getHours() < 12;
 
   if (!loaded) {
     return null;
@@ -25,7 +25,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <DrawerNavigator />
-      <StatusBar style={isBeforeNoon ? 'dark' : 'light'} />
+      <StatusBar style={'light'} />
     </ThemeProvider>
   );
 }
