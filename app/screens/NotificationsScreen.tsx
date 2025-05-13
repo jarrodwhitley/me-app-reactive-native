@@ -1,12 +1,9 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
-export default function SettingsScreen() {
-  const navigation = useNavigation();
-
+export default function NotificationsScreen() {
   return (
     <ThemedView style={{ flex: 1 }}>
       {/* Content */}
@@ -17,7 +14,7 @@ export default function SettingsScreen() {
           alignItems: 'center',
         }}
       >
-        <ThemedText>Settings</ThemedText>
+        <ThemedText>Notifications</ThemedText>
       </ThemedView>
     </ThemedView>
   );

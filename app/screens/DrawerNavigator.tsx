@@ -19,7 +19,7 @@ import * as Device from 'expo-device';
 import * as Linking from 'expo-linking';
 import HomeScreen from './HomeScreen';
 import AboutScreen from './AboutScreen';
-import SettingsScreen from './SettingsScreen';
+import NotificationsScreen from './NotificationsScreen';
 
 const isBeforeNoon = new Date().getHours() < 12;
 const Drawer = createDrawerNavigator();
@@ -55,8 +55,8 @@ function HomeStack() {
         }}
       />
       <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="Notifications"
+        component={NotificationsScreen}
         options={{
           headerShown: true,
           headerStyle: {
@@ -152,21 +152,13 @@ function CustomDrawerContent(props: any) {
         labelStyle={styles.drawerItemLabel}
       />
       <DrawerItem
-        label="Settings"
-        icon={({ color, size }) => (
-          <IconSymbol name="gearshape" size={size} color={iconColor} />
-        )}
-        onPress={() =>
-          props.navigation.navigate('HomeStack', { screen: 'Settings' })
-        }
-        labelStyle={styles.drawerItemLabel}
-      />
-      <DrawerItem
         label="Notifications"
         icon={({ color, size }) => (
           <IconSymbol name="bell" size={size} color={iconColor} />
         )}
-        onPress={() => console.log('Navigate to Notifications')}
+        onPress={() =>
+          props.navigation.navigate('HomeStack', { screen: 'Notifications' })
+        }
         labelStyle={styles.drawerItemLabel}
       />
       <DrawerItem
