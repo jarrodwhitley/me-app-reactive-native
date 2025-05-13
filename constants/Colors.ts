@@ -16,12 +16,19 @@ export const Colors = {
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    // Dark mode in future update
+    // text: '#ECEDEE',
+    // background: '#151718',
+    // tint: tintColorDark,
+    // icon: '#9BA1A6',
+    // tabIconDefault: '#9BA1A6',
+    // tabIconSelected: tintColorDark,
+    text: '#11181C',
+    background: '#fff',
+    tint: tintColorLight,
+    icon: '#687076',
+    tabIconDefault: '#687076',
+    tabIconSelected: tintColorLight,
   },
   morning: {
     primary: '#A1CEDC',
@@ -30,6 +37,8 @@ export const Colors = {
     drawerButtonSelected: '#DCF8FA',
     drawerBackground: '#296C70',
     headerBackground: '#296C70',
+    bodyBackground: '#1D3D47',
+    bodyText: '#E4D7E5',
   },
   evening: {
     primary: '#1D3D47',
@@ -38,5 +47,7 @@ export const Colors = {
     drawerButton: '#423160',
     drawerButtonSelected: '#6C568E',
     headerBackground: '#312252',
+    bodyBackground: '#231932',
+    bodyText: '#D9D9D9',
   },
 };

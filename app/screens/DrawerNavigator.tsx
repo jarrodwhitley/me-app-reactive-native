@@ -5,16 +5,131 @@ import {
   DrawerContentScrollView,
   DrawerItem,
 } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Share,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
+import * as Device from 'expo-device';
+import * as Linking from 'expo-linking';
 import HomeScreen from './HomeScreen';
+import AboutScreen from './AboutScreen';
+import SettingsScreen from './SettingsScreen';
 
+const isBeforeNoon = new Date().getHours() < 12;
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+// Stack Navigator for Home and Settings
+function HomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: isBeforeNoon
+              ? Colors.morning.headerBackground
+              : Colors.evening.headerBackground,
+          },
+          headerTintColor: 'white',
+          headerBackTitle: 'Back',
+          headerBackTitleStyle: {
+            fontSize: 16,
+          },
+          headerTitleStyle: {
+            fontWeight: '500',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: isBeforeNoon
+              ? Colors.morning.headerBackground
+              : Colors.evening.headerBackground,
+          },
+          headerTintColor: 'white',
+          headerBackTitle: 'Back',
+          headerBackTitleStyle: {
+            fontSize: 16,
+          },
+          headerTitleStyle: {
+            fontWeight: '500',
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function CustomDrawerContent(props: any) {
   const iconColor = isBeforeNoon
     ? Colors.morning.drawerIcon
     : Colors.evening.drawerIcon;
+
+  const handleReportBug = async () => {
+    const deviceInfo = `
+          Device Model: ${Device.modelName || 'Unknown'}
+          OS: ${Device.osName || 'Unknown'} ${Device.osVersion || 'Unknown'}
+          App Version: 1.0.0
+        `;
+
+    const subject = encodeURIComponent('M&E App Bug Report');
+    const body = encodeURIComponent(
+      `Please describe the issue you encountered and feel free to include screenshots:\n\n\n---\nDevice Info:\n${deviceInfo}`,
+    );
+
+    const email = `mailto:bugs@jarrodwhitley.com?subject=${subject}&body=${body}`;
+
+    try {
+      await Linking.openURL(email);
+    } catch (error) {
+      console.error('Failed to open email app:', error);
+    }
+  };
+  const handleShareApp = async () => {
+    const appStoreLink = 'https://apps.apple.com/app/idYOUR_APP_ID'; // Replace with your App Store link
+    const playStoreLink =
+      'https://play.google.com/store/apps/details?id=com.yourcompany.yourapp'; // Replace with your Play Store link
+
+    const appLink = Platform.OS === 'ios' ? appStoreLink : playStoreLink;
+
+    try {
+      const result = await Share.share({
+        message: `Check out this amazing app: ${appLink}`,
+        title: 'Share M&E App',
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log('Shared with activity type:', result.activityType);
+        } else {
+          console.log('Shared successfully');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log('Share dismissed');
+      }
+    } catch (error) {
+      console.error('Error sharing the app:', error);
+    }
+  };
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -31,7 +146,19 @@ function CustomDrawerContent(props: any) {
         icon={({ color, size }) => (
           <IconSymbol name="info.circle" size={size} color={iconColor} />
         )}
-        onPress={() => console.log('Navigate to About')}
+        onPress={() =>
+          props.navigation.navigate('HomeStack', { screen: 'About' })
+        }
+        labelStyle={styles.drawerItemLabel}
+      />
+      <DrawerItem
+        label="Settings"
+        icon={({ color, size }) => (
+          <IconSymbol name="gearshape" size={size} color={iconColor} />
+        )}
+        onPress={() =>
+          props.navigation.navigate('HomeStack', { screen: 'Settings' })
+        }
         labelStyle={styles.drawerItemLabel}
       />
       <DrawerItem
@@ -51,15 +178,7 @@ function CustomDrawerContent(props: any) {
             color={iconColor}
           />
         )}
-        onPress={() => console.log('Navigate to Share App')}
-        labelStyle={styles.drawerItemLabel}
-      />
-      <DrawerItem
-        label="Buy me a coffee"
-        icon={({ color, size }) => (
-          <IconSymbol name="cup.and.saucer" size={size} color={iconColor} />
-        )}
-        onPress={() => console.log('Navigate to Buy me a coffee')}
+        onPress={handleShareApp}
         labelStyle={styles.drawerItemLabel}
       />
       <DrawerItem
@@ -67,15 +186,12 @@ function CustomDrawerContent(props: any) {
         icon={({ color, size }) => (
           <IconSymbol name="ant" size={size} color={iconColor} />
         )}
-        onPress={() => console.log('Navigate to Found a bug')}
+        onPress={handleReportBug}
         labelStyle={styles.drawerItemLabel}
       />
     </DrawerContentScrollView>
   );
 }
-
-// Utility function to check if the current time is before noon
-const isBeforeNoon = new Date().getHours() < 12;
 
 export default function DrawerNavigator() {
   return (
@@ -91,7 +207,7 @@ export default function DrawerNavigator() {
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="HomeStack" component={HomeStack} />
     </Drawer.Navigator>
   );
 }

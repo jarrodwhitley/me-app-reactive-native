@@ -1,6 +1,12 @@
 import { Image } from 'expo-image';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Animated,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from 'react-native';
 
 import contentData from '@/assets/data/content.json';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -14,13 +20,14 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 const MorningImage = require('@/assets/images/morning_bg.png');
 const EveningImage = require('@/assets/images/evening_bg.png');
-const ReactLogo = require('@/assets/images/partial-react-logo.png');
+const headerImage = require('@/assets/images/partial-react-logo.png');
 
 export default function HomeScreen() {
   const [selectedDevotional, setSelectedDevotional] =
     useState<SelectedContent | null>(null);
   const [isBeforeNoon, setIsBeforeNoon] = useState(true);
   const scrollY = useRef(new Animated.Value(0)).current;
+  const colorScheme = useColorScheme();
   const navigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
 
   function selectDevotional() {
@@ -112,7 +119,7 @@ export default function HomeScreen() {
               <ThemedView style={styles.headerContainer}>
                 <Image
                   source={isBeforeNoon ? MorningImage : EveningImage}
-                  style={styles.reactLogo}
+                  style={styles.headerImage}
                 />
                 <ThemedText
                   type="title"
@@ -133,7 +140,7 @@ export default function HomeScreen() {
               <ThemedText type="title" style={styles.devotionalTitle}>
                 {selectedDevotional.title}
               </ThemedText>
-              <ThemedText style={styles.devoBody}>
+              <ThemedText style={[styles.devoBody]}>
                 {selectedDevotional
                   ? selectedDevotional.body
                   : 'Loading devotional content...'}
@@ -152,16 +159,16 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 100, // Increase the height to provide more space
-    justifyContent: 'center', // Center the header text vertically
-    alignItems: 'center', // Center the header text horizontally
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 10,
-    paddingTop: 20, // Add padding to push content down
+    paddingTop: 20,
   },
   menuButton: {
-    position: 'absolute', // Position the menu button independently
-    bottom: 515, // Adjust vertical position to align with the header text
-    left: 16, // Adjust horizontal position
+    position: 'absolute',
+    bottom: 515,
+    left: 16,
   },
   fixedMenuButton: {
     position: 'absolute',
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
     height: 200,
     position: 'relative',
   },
-  reactLogo: {
+  headerImage: {
     height: '100%',
     width: '100%',
     position: 'absolute',
@@ -202,7 +209,8 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   contentContainer: {
-    paddingTop: 0,
+    paddingTop: 10,
+    paddingHorizontal: 32,
   },
   devotionalTitle: {
     fontSize: 24,
@@ -215,5 +223,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     lineHeight: 24,
     textAlign: 'justify',
+    color: '#000',
   },
 });

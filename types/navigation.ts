@@ -1,4 +1,6 @@
 export type RootDrawerParamList = {
-  Home: undefined; 
-  Menu: undefined; 
+  Home: undefined;
+  About: undefined;
+  Notifications: undefined;
+  Settings: undefined;
 };
