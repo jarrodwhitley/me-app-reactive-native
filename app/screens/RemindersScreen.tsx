@@ -146,7 +146,7 @@ export default function RemindersScreen() {
     const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: type === 'morning' ? 'Morning Devotional' : 'Evening Devotional',
-        body: `It's time for your ${type} reading with Charles Spurgeon.`,
+        body: `It's time for your ${type} reading`,
         sound: true,
       },
       trigger,
