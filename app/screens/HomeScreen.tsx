@@ -20,14 +20,12 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 const MorningImage = require('@/assets/images/morning_bg.png');
 const EveningImage = require('@/assets/images/evening_bg.png');
-const headerImage = require('@/assets/images/partial-react-logo.png');
 
 export default function HomeScreen() {
   const [selectedDevotional, setSelectedDevotional] =
     useState<SelectedContent | null>(null);
   const [isBeforeNoon, setIsBeforeNoon] = useState(true);
   const scrollY = useRef(new Animated.Value(0)).current;
-  const colorScheme = useColorScheme();
   const navigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>();
 
   function selectDevotional() {

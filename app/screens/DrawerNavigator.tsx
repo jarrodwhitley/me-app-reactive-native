@@ -12,8 +12,7 @@ import {
   Text,
   View,
   Share,
-  Platform,
-  TouchableOpacity,
+  Platform
 } from 'react-native';
 import * as Device from 'expo-device';
 import * as Linking from 'expo-linking';
@@ -81,7 +80,7 @@ function HomeStack() {
 function CustomDrawerContent(props: any) {
   const iconColor = isBeforeNoon
     ? Colors.morning.primaryDark
-    : Colors.evening.primaryDark;
+    : Colors.evening.primaryLight;
 
   const handleReportBug = async () => {
     const deviceInfo = `
