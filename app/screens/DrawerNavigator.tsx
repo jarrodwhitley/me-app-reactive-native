@@ -19,7 +19,7 @@ import * as Device from 'expo-device';
 import * as Linking from 'expo-linking';
 import HomeScreen from './HomeScreen';
 import AboutScreen from './AboutScreen';
-import NotificationsScreen from './NotificationsScreen';
+import RemindersScreen from './RemindersScreen';
 
 const isBeforeNoon = new Date().getHours() < 12;
 const Drawer = createDrawerNavigator();
@@ -41,8 +41,8 @@ function HomeStack() {
           headerShown: true,
           headerStyle: {
             backgroundColor: isBeforeNoon
-              ? Colors.morning.headerBackground
-              : Colors.evening.headerBackground,
+              ? Colors.morning.primaryMedium
+              : Colors.evening.primaryDark,
           },
           headerTintColor: 'white',
           headerBackTitle: 'Back',
@@ -55,14 +55,14 @@ function HomeStack() {
         }}
       />
       <Stack.Screen
-        name="Notifications"
-        component={NotificationsScreen}
+        name="Reminders"
+        component={RemindersScreen}
         options={{
           headerShown: true,
           headerStyle: {
             backgroundColor: isBeforeNoon
-              ? Colors.morning.headerBackground
-              : Colors.evening.headerBackground,
+              ? Colors.morning.primaryMedium
+              : Colors.evening.primaryDark,
           },
           headerTintColor: 'white',
           headerBackTitle: 'Back',
@@ -80,8 +80,8 @@ function HomeStack() {
 
 function CustomDrawerContent(props: any) {
   const iconColor = isBeforeNoon
-    ? Colors.morning.drawerIcon
-    : Colors.evening.drawerIcon;
+    ? Colors.morning.primaryDark
+    : Colors.evening.primaryDark;
 
   const handleReportBug = async () => {
     const deviceInfo = `
@@ -152,12 +152,12 @@ function CustomDrawerContent(props: any) {
         labelStyle={styles.drawerItemLabel}
       />
       <DrawerItem
-        label="Notifications"
+        label="Reminders"
         icon={({ color, size }) => (
           <IconSymbol name="bell" size={size} color={iconColor} />
         )}
         onPress={() =>
-          props.navigation.navigate('HomeStack', { screen: 'Notifications' })
+          props.navigation.navigate('HomeStack', { screen: 'Reminders' })
         }
         labelStyle={styles.drawerItemLabel}
       />
@@ -191,8 +191,8 @@ export default function DrawerNavigator() {
       screenOptions={{
         drawerStyle: {
           backgroundColor: isBeforeNoon
-            ? Colors.morning.drawerBackground
-            : Colors.evening.drawerBackground,
+            ? Colors.morning.primaryMedium
+            : Colors.evening.primaryDark,
           width: 240,
         },
         headerShown: false,

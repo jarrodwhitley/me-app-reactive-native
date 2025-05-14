@@ -89,8 +89,8 @@ export default function HomeScreen() {
           {
             opacity: headerOpacity,
             backgroundColor: isBeforeNoon
-              ? Colors.morning.headerBackground
-              : Colors.evening.headerBackground,
+              ? Colors.morning.primaryMedium
+              : Colors.evening.primaryDark,
           },
         ]}
       >
@@ -112,8 +112,8 @@ export default function HomeScreen() {
         {selectedDevotional && (
           <ParallaxScrollView
             headerBackgroundColor={{
-              light: Colors.morning.headerBackground,
-              dark: Colors.evening.headerBackground,
+              light: Colors.morning.primaryMedium,
+              dark: Colors.evening.primaryDark,
             }}
             headerImage={
               <ThemedView style={styles.headerContainer}>
